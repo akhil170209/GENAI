@@ -135,25 +135,57 @@ st.markdown(
 
     /* 1. LAYOUT & PROMPT BAR WIDTH ADJUSTMENT */
     .main .block-container {
-        max-width: 95% !important;
-        padding-left: 2rem !important;
-        padding-right: 2rem !important;
+        max-width: 800px !important; /* Gemini-style centered, readable width */
+        padding-top: 5rem !important;  /* Space under the top header */
+        padding-bottom: 8rem !important; /* Space above the fixed prompt bar */
     }
 
     /* 2. HEADER & SIDEBAR TOGGLE FIX */
-    #MainMenu, footer {
-        visibility: hidden;
-    }
-
     header[data-testid="stHeader"] {
-        background-color: transparent !important;
+        background: rgba(9, 10, 15, 0.8) !important;
+        backdrop-filter: blur(12px) !important;
+        -webkit-backdrop-filter: blur(12px) !important;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
         z-index: 999999 !important;
     }
 
+    /* style the sidebar button background & border */
     [data-testid="stSidebarCollapseButton"],
-    [data-testid="stHeader"] button {
+    [data-testid="stSidebarExpandButton"],
+    button[data-testid="baseButton-headerNoPadding"],
+    header[data-testid="stHeader"] button {
         visibility: visible !important;
-        color: #00f3ff !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        background-color: #ff007f !important; /* Solid pink background for high visibility */
+        border: 1px solid #ff007f !important;
+        border-radius: 8px !important;
+        padding: 6px !important;
+        box-shadow: 0 0 10px rgba(255, 0, 127, 0.5) !important;
+        z-index: 9999999 !important;
+        transition: all 0.2s ease-in-out !important;
+    }
+
+    /* Hover effect */
+    [data-testid="stSidebarCollapseButton"]:hover,
+    [data-testid="stSidebarExpandButton"]:hover,
+    header[data-testid="stHeader"] button:hover {
+        background-color: #00f3ff !important; /* Swaps to cyan on hover */
+        border-color: #00f3ff !important;
+        box-shadow: 0 0 12px rgba(0, 243, 255, 0.7) !important;
+        cursor: pointer !important;
+    }
+
+    /* Ensure the chevron icon inside remains sharp and bright white */
+    [data-testid="stSidebarCollapseButton"] svg,
+    [data-testid="stSidebarExpandButton"] svg,
+    header[data-testid="stHeader"] button svg {
+        fill: #ffffff !important;
+        color: #ffffff !important;
+        stroke: #ffffff !important;
+        width: 18px !important;
+        height: 18px !important;
     }
 
     /* 3. MAIN NEON BACKGROUND */
@@ -253,55 +285,51 @@ st.markdown(
         color: #ffffff !important;
     }
 
-    /* 7. WIDE BOTTOM CONTAINER & CHAT INPUT */
-    [data-testid="stBottom"],
+    /* 7. FIXED BOTTOM PROMPT CONTAINER */
+    [data-testid="stBottom"] {
+        background-color: #090a0f !important; /* Solid dark background matching app theme */
+        border-top: 1px solid rgba(0, 243, 255, 0.15) !important;
+        padding-top: 12px !important;
+        padding-bottom: 16px !important;
+        z-index: 9999 !important;
+    }
+
     div[data-testid="stBottom"] > div {
-        background-color: #090a0f !important;
-        border-top: 1px solid rgba(0, 243, 255, 0.2) !important;
-        max-width: 95% !important;
+        background-color: transparent !important;
+        border: none !important;
+        max-width: 700px !important; /* Reduced container width */
         margin: 0 auto !important;
-        left: 0 !important;
-        right: 0 !important;
     }
 
+    /* Inner Chat Input Container */
     [data-testid="stChatInput"] {
-        width: 100% !important;
-        max-width: 100% !important;
         background-color: #12131c !important;
-        border-radius: 16px 16px 0px 0px !important;
+        border: 1px solid rgba(0, 243, 255, 0.3) !important;
+        border-radius: 16px !important;
+        padding: 4px 8px !important;
+        box-shadow: 0 0 12px rgba(0, 243, 255, 0.15) !important;
     }
 
+    /* Text Input Field & Typed Text Color Fix */
     [data-testid="stChatInput"] textarea {
         background-color: #12131c !important;
-        border: 1px solid #00f3ff !important;
-        border-radius: 14px 14px 0px 0px !important;
         color: #ffffff !important;
-        box-shadow: 0 0 12px rgba(0, 243, 255, 0.3) !important;
+        font-size: 14px !important;
+        caret-color: #00f3ff !important;
     }
 
-    /* MAKE PLACEHOLDER TEXT VISIBLE */
+    /* Placeholder Text ("Message BuddyBot...") */
     [data-testid="stChatInput"] textarea::placeholder {
-        color: #FF5F1F !important;
+        color: #a7a9be !important;
         opacity: 1 !important;
     }
 
-    [data-testid="stChatInput"] textarea:focus {
+    /* Active Focus State */
+    [data-testid="stChatInput"]:focus-within {
         border-color: #ff007f !important;
-        box-shadow: 0 0 15px rgba(255, 0, 127, 0.5) !important;
+        box-shadow: 0 0 15px rgba(255, 0, 127, 0.4) !important;
     }
 
-    [data-testid="stChatInput"] button {
-        background-color: #12131c !important;
-        color: #00f3ff !important;
-        border: 1px solid #00f3ff !important;
-        border-radius: 15px !important;
-    }
-
-    [data-testid="stChatInput"] button:hover {
-        background-color: #ff007f !important;
-        color: #ffffff !important;
-        border-color: #ff007f !important;
-    }
     /* 8. BUTTONS & CARDS */
     .stButton > button {
         border-radius: 10px;
@@ -554,4 +582,3 @@ if st.session_state.document_uploaded:
         """,
         unsafe_allow_html=True
     )
-
