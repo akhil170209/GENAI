@@ -13,7 +13,8 @@ from langchain.tools import tool
 from langgraph.checkpoint.memory import InMemorySaver
 import streamlit as st
 
-
+save_dir = "temp_uploads"
+os.makedirs(save_dir, exist_ok=True)
 # ============================================================
 # HELPER: LOAD LOCAL LOGO IMAGE
 # ============================================================
@@ -416,9 +417,10 @@ with st.sidebar:
         if st.button("📚 Process Documents", use_container_width=True):
             with st.spinner("Processing documents..."):
                 path = "./doc_files/"
-                for file in uploaded:
-                    with open(path + file.name, "wb") as f:
-                        f.write(file.getvalue())
+                for file in uploaded: 
+                    file_path = os.path.join(save_dir, file.name)
+                    with open(file_path, "wb") as f:
+                        f.write(file.getbuffer())
 
                 process_document(path)
                 st.rerun()
