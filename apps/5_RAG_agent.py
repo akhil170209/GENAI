@@ -20,21 +20,16 @@ import streamlit as st
 # HELPER: LOAD LOCAL LOGO IMAGE
 # ============================================================
 
-import os
-from PIL import Image
+def get_base64_image(image_path):
+    try:
+        with open(image_path, "rb") as img_file:
+            return base64.b64encode(img_file.read()).decode("utf-8")
+    except FileNotFoundError:
+        return ""
 
-# 1. Define relative path to image based on this script's directory
-current_dir = os.path.dirname(os.path.abspath(__file__))
-logo_path = os.path.join(current_dir, "logo.png")  # Replace "logo.png" with your actual image filename/path
+logo_b64 = get_base64_image("logo.png")
+logo_src = f"data:image/png;base64,{logo_b64}" if logo_b64 else ""
 
-# 2. Render image in Sidebar
-with st.sidebar:
-    st.image(logo_path, width=60)
-    st.title("BuddyBot")
-
-# 3. Render image in Main Header
-st.image(logo_path, width=80)
-st.title("BuddyBot")
 
 # SESSION STATE
 
