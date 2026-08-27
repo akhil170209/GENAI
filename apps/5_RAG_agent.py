@@ -573,7 +573,15 @@ else:
                 )
 
             answer = response["messages"][-1].content
-            st.markdown(answer)
+last_message = response["messages"][-1].content
+
+if isinstance(last_message, list):
+        clean_text = "".join([block.get("text", "") for block in last_message if isinstance(block, dict)])
+else:
+        clean_text = str(last_message)
+
+        # Display clean response in Streamlit
+        st.markdown(clean_text)
 
         # Save AI response
         st.session_state.messages.append({"role": "ai", "content": answer})
