@@ -5,8 +5,8 @@ load_dotenv()
  # Ignores missing python-dotenv on Streamlit Cloud
 from langchain_community.document_loaders import PyPDFLoader, PyPDFDirectoryLoader
 from langchain_text_splitters import RecursiveCharacterTextSplitter
-from langchain_google_genai import GoogleGenerativeAIEmbeddings
-from langchain_groq import ChatGroq
+from langchain_google_genai import ChatGoogleGenerativeAI,GoogleGenerativeAIEmbeddings
+
 from langchain_community.vectorstores import InMemoryVectorStore
 from langchain.agents import create_agent
 from langchain.tools import tool
@@ -79,9 +79,9 @@ def process_document(path):
     )
 
     # LLM & Tools setup
-    groq_api_key = os.getenv("GROQ_API_KEY") or st.secrets.get("GROQ_API_KEY")
-    llm = ChatGroq(
-        model="openai/gpt-oss-120b",groq_api_key=groq_api_key
+    
+    llm = ChatGoogleGenerativeAI(
+        model="gemini-3.7-flash",google_api_key=google_api_key
     )
 
     @tool
