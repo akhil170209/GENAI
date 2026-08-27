@@ -1,7 +1,10 @@
 import base64
-from dotenv import load_dotenv
-load_dotenv()
-
+import os
+try:
+    from dotenv import load_dotenv
+    load_dotenv()
+except ModuleNotFoundError:
+    pass  # Ignores missing python-dotenv on Streamlit Cloud
 from langchain_community.document_loaders import PyPDFLoader, PyPDFDirectoryLoader
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_google_genai import GoogleGenerativeAIEmbeddings
@@ -12,7 +15,7 @@ from langchain.tools import tool
 from langgraph.checkpoint.memory import InMemorySaver
 import streamlit as st
 
-api_key = st.secrets["GROQ_API_KEY"]
+
 # ============================================================
 # HELPER: LOAD LOCAL LOGO IMAGE
 # ============================================================
