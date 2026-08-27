@@ -1,9 +1,8 @@
-python-dotenv
 langchain
 langchain-openai
 langchain-google-genai
 langchain-groq
-dotenv
+python-dotenv
 streamlit
 langchain-community
 langgraph
