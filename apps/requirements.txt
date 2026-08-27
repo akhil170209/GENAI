@@ -1,5 +1,4 @@
 langchain
-langchain-openai
 langchain-google-genai
 langchain-groq
 python-dotenv
@@ -10,3 +9,4 @@ pypdf
 langchain-text-splitters
 langchain-chroma
 pydantic
+pysqlite3-binary

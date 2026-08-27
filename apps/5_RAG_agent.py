@@ -9,7 +9,7 @@ from langchain_google_genai import ChatGoogleGenerativeAI,GoogleGenerativeAIEmbe
 from langchain_groq import ChatGroq
 from langchain_community.vectorstores import InMemoryVectorStore
 from langchain.agents import create_agent
-from langchain.tools import tool
+from langchain_core.tools import tool
 from langgraph.checkpoint.memory import InMemorySaver
 import streamlit as st
 
@@ -89,21 +89,18 @@ def process_document(path):
     )
 
     @tool
-    def retrieve_context(query: str):
-        """Retrieve documents relevant to a query from the knowledge base."""
+    def retrieve_context(query: str) -> str:
+        """Search and retrieve relevant context from uploaded PDF documents."""
+        if "retriever" not in st.session_state or st.session_state.retriever is None:
+            return "No documents have been uploaded or processed yet."
+        
+        docs = st.session_state.retriever.invoke(query)
+        if not docs:
+            return "No relevant information found in the uploaded documents."
+        
+        return "\n\n".join([doc.page_content for doc in docs])
 
-        context = ""
-
-        docs = vector_db.similarity_search(
-            query=query,
-            k=3
-        )
-
-        for doc in docs:
-            context += doc.page_content + "\n\n"
-
-        return context
-
+    tools = [retrieve_context]
     system_prompt = """You are a helpful assistant that answers questions using retrieved context. 
         My knowledge base consists of the details from the uploaded document. 
         ALWAYS use the `retrieve_context` tool for questions requiring external knowledge."""
