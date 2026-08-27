@@ -516,7 +516,7 @@ if not st.session_state.document_uploaded:
     st.markdown(
         f"""
         <div class="welcome-container">
-            <img src="{logo_src}" style="width: 80px; height: 80px; border-radius: 20px; object-fit: cover; margin-bottom: 20px;">
+            <img src="{img_src}" style="width: 80px; height: 80px; border-radius: 20px; object-fit: cover; margin-bottom: 20px;">
             <div class="welcome-title">How can I help you today?</div>
             <div class="welcome-text">
                 Upload a PDF document from the sidebar and start chatting with BuddyBot.
