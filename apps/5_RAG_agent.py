@@ -574,15 +574,15 @@ else:
 
             answer = response["messages"][-1].content
 
-if isinstance(answer, list):
-        clean_text = "".join([block.get("text", "") for block in answer if isinstance(block, dict)])
-else:
-        clean_text = str(answer)
+    if isinstance(answer, list):
+            clean_text = "".join([block.get("text", "") for block in answer if isinstance(block, dict)])
+    else:
+            clean_text = str(answer)
 
-        st.markdown(clean_text)
+            st.markdown(clean_text)
 
-        # Save AI response
-        st.session_state.messages.append({"role": "ai", "content": answer})
+            # Save AI response
+            st.session_state.messages.append({"role": "ai", "content": answer})
 
 
 # FOOTER
