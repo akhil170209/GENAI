@@ -12,7 +12,7 @@ from langchain.tools import tool
 from langgraph.checkpoint.memory import InMemorySaver
 import streamlit as st
 
-
+api_key = st.secrets["GROQ_API_KEY"]
 # ============================================================
 # HELPER: LOAD LOCAL LOGO IMAGE
 # ============================================================
