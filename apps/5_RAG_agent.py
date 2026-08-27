@@ -572,17 +572,17 @@ else:
                     {"configurable": {"thread_id": 2}}
                 )
 
-            answer = response["messages"][-1].content
+                last_message = response["messages"][-1].content
 
-    if isinstance(answer, list):
-            clean_text = "".join([block.get("text", "") for block in answer if isinstance(block, dict)])
-    else:
-            clean_text = str(answer)
+                if isinstance(last_message, list):
+                    clean_text = "".join([block.get("text", "") for block in last_message if isinstance(block, dict)])
+                else:
+                    clean_text = str(last_message)
 
-            st.markdown(clean_text)
-
-            # Save AI response
-            st.session_state.messages.append({"role": "ai", "content": answer})
+                # Display clean response in Streamlit
+                st.markdown(clean_text)
+        # Save AI response
+            st.session_state.messages.append({"role": "ai", "content": last_message})
 
 
 # FOOTER
