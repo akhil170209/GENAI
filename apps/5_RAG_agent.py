@@ -1,10 +1,8 @@
 import base64
 import os
-try:
-    from dotenv import load_dotenv
-    load_dotenv()
-except ModuleNotFoundError:
-    pass  # Ignores missing python-dotenv on Streamlit Cloud
+from dotenv import load_dotenv
+load_dotenv()
+ # Ignores missing python-dotenv on Streamlit Cloud
 from langchain_community.document_loaders import PyPDFLoader, PyPDFDirectoryLoader
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_google_genai import GoogleGenerativeAIEmbeddings
@@ -20,16 +18,16 @@ import streamlit as st
 # HELPER: LOAD LOCAL LOGO IMAGE
 # ============================================================
 
-def get_base64_image(image_path):
-    try:
-        with open(image_path, "rb") as img_file:
-            return base64.b64encode(img_file.read()).decode("utf-8")
-    except FileNotFoundError:
-        return ""
+def get_base64_image(image_filename):
+    current_dir = os.path.dirname(os.path.abspath(__file__))
+    image_path = os.path.join(current_dir, image_filename)
+    if os.path.exists(image_path):
+        with open(image_path, "rb") as f:
+            return base64.b64encode(f.read()).decode()
+    return ""
 
-logo_b64 = get_base64_image("logo.png")
-logo_src = f"data:image/png;base64,{logo_b64}" if logo_b64 else ""
-
+logo_base64 = get_base64_image("logo.png") 
+img_src = f"data:image/png;base64,{logo_base64}" if logo_base64 else ""
 
 # SESSION STATE
 
@@ -387,17 +385,16 @@ st.markdown(
 
 with st.sidebar:
 
-    st.markdown(
-        f"""
-        <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 15px;">
-            <img src="{logo_src}" style="width: 45px; height: 45px; border-radius: 12px; object-fit: cover;">
-            <div>
-                <div class="sidebar-title">BuddyBot</div>
-                <div class="sidebar-subtitle">Your AI document assistant</div>
-            </div>
+    st.markdown(f"""
+    <div style="display: flex; align-items: center; gap: 12px;">
+        <img src="{img_src}" style="width: 45px; height: 45px; border-radius: 12px; object-fit: cover;">
+        <div>
+            <h3 style="margin: 0; padding: 0;">BuddyBot</h3>
+            <p style="margin: 0; padding: 0; font-size: 14px; color: #888;">AI-powered document assistant</p>
         </div>
-        """,
-        unsafe_allow_html=True
+    </div>
+""", 
+    unsafe_allow_html=True
     )
 
     # New Chat Button
@@ -499,7 +496,7 @@ with st.sidebar:
 st.markdown(
     f"""
     <div class="main-header">
-        <img src="{logo_src}" style="width: 45px; height: 45px; border-radius: 12px; object-fit: cover;">
+        <img src="{img_src}" style="width: 45px; height: 45px; border-radius: 12px; object-fit: cover;">
         <div>
             <div class="main-title">BuddyBot</div>
             <div class="main-subtitle">AI-powered document assistant</div>
