@@ -68,8 +68,9 @@ def process_document(path):
     docs = splitter.split_documents(documents=docs)
 
     # Embeddings & Vector Store
+    google_api_key = os.getenv("GOOGLE_API_KEY") or st.secrets.get("GOOGLE_API_KEY")
     embeddings = GoogleGenerativeAIEmbeddings(
-        model="gemini-embedding-2-preview"
+        model="gemini-embedding-2-preview",google_api_key=google_api_key
     )
 
     vector_db = InMemoryVectorStore.from_documents(
