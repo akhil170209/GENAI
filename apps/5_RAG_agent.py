@@ -84,7 +84,7 @@ def process_document(path):
 
 # 2. Set your agent's LLM to Groq
     llm = ChatGroq(
-        model="llama-3.3-70b-versatile",
+        model="openai/gpt-oss-120b",
         groq_api_key=groq_api_key
     )
 
