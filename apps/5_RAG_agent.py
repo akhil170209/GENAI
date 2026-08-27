@@ -2,11 +2,11 @@ import base64
 import os
 from dotenv import load_dotenv
 load_dotenv()
- # Ignores missing python-dotenv on Streamlit Cloud
+
 from langchain_community.document_loaders import PyPDFLoader, PyPDFDirectoryLoader
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_google_genai import ChatGoogleGenerativeAI,GoogleGenerativeAIEmbeddings
-
+from langchain_groq import ChatGroq
 from langchain_community.vectorstores import InMemoryVectorStore
 from langchain.agents import create_agent
 from langchain.tools import tool
@@ -80,8 +80,12 @@ def process_document(path):
 
     # LLM & Tools setup
     
-    llm = ChatGoogleGenerativeAI(
-        model="gemini-3.7-flash",google_api_key=google_api_key
+    groq_api_key = os.getenv("GROQ_API_KEY") or st.secrets.get("GROQ_API_KEY")
+
+# 2. Set your agent's LLM to Groq
+    llm = ChatGroq(
+        model="llama-3.3-70b-versatile",
+        groq_api_key=groq_api_key
     )
 
     @tool
